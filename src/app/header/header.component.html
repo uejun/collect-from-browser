@@ -1,0 +1,14 @@
+<header>
+    <md-toolbar color="primary">
+        <span>Okajima Lab Face Collector</span>
+
+        <!-- This fills the remaining space of the current row -->
+        <span class="example-fill-remaining-space"></span>
+        <nav>
+            <span *ngIf="!isAuth()" [routerLink]="['/signup']"><a href="" style="color: white">Sign Up</a></span>
+            <span *ngIf="!isAuth()" [routerLink]="['/signin']"><a href="" style="color: white;">Sign In</a></span>
+            <span *ngIf="isAuth()" [routerLink]="['/signin']" (click)="onLogout()" style="cursor: pointer;"><a href="" style="color: white;">Logout</a></span>
+        </nav>
+    </md-toolbar>
+
+</header>

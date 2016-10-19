@@ -1,0 +1,40 @@
+<div align="center">
+<md-card style="width: 60%">
+  <md-toolbar>Input Your Info For Sign Up</md-toolbar>
+  <md-card-content>
+    <form [formGroup]="sineupForm" (ngSubmit)="onSubmit()">
+      <md-input type="test"
+                placeholder="User Name"
+                formControlName="user_name"
+                #user_name
+                style="width: 100%"
+      ></md-input>
+      <md-input type="email"
+                placeholder="Email"
+                formControlName="email"
+                #email
+                style="width: 100%"
+      ></md-input>
+      <span *ngIf="!email.pristine && email.errors != null && email.errors['noEmail']" style="text-align: left">Invalid Email</span>
+      <br>
+      <md-input type="password"
+                placeholder="Password *more than 6 characters."
+                formControlName="password"
+                #password
+                style="width: 100%"
+      ></md-input>
+      <br>
+      <md-input type="password"
+                placeholder="Confirm Password"
+                formControlName="confirm_password"
+                #confirm_password
+                style="width: 100%"
+      ></md-input>
+      <span *ngIf="!confirm_password.pristine && confirm_password.errors != null && confirm_password.errors['passwordsNotMatch']" style="text-align: left;">Not match password.</span>
+      <br>
+      <button type="submit" md-raised-button color="primary" style="margin: auto" [disabled]="!sineupForm.valid">Sign Up</button>
+    </form>
+  </md-card-content>
+  <md-progress-bar *ngIf="registering" mode="indeterminate" color="primary"></md-progress-bar>
+</md-card>
+</div>

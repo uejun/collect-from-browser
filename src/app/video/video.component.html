@@ -1,0 +1,32 @@
+<div *ngIf="uploading">
+    <md-progress-bar mode="indeterminate" color="primary"></md-progress-bar>
+</div>
+<md-grid-list cols="3" [style.background]="'white'">
+    <md-grid-tile>
+        <md-card id="videocard">
+            <md-card-content>
+                <app-stimulus #stimuluscomp></app-stimulus>
+            </md-card-content>
+        </md-card>
+    </md-grid-tile>
+    <md-grid-tile>
+        <md-card>
+           <md-card-content>
+               <video hidden #myvideo id="myvideo" [class.flapPhoto]="true" autoplay (canplay)="canPlay()" [width]="width" [height]="height">Video stream notavailable.</video>
+               <video #showvideo id="showvideo" [class.flapPhoto]="true" autoplay (canplay)="canPlay()" width="100%" height="width*0.75">Video stream notavailable.</video>
+               <br>
+               <button [class.actionButton]="true"  (click)="takePicture()" id="startbutton" md-raised-button color="primary">Take photo</button>
+               <button [class.actionButton]="true"  (click)="postFace()" md-raised-button color="warn">Upload</button>
+           </md-card-content>
+        </md-card>
+    </md-grid-tile>
+    <md-grid-tile>
+       <md-card>
+          <md-card-content>
+              <img  id="photo" [src]= "photoSrc" width="100%" height="width*0.75" [class.flapPhoto]="!pristine" alt="">
+          </md-card-content>
+       </md-card>
+    </md-grid-tile>
+</md-grid-list>
+<canvas hidden id="canvas" style="-webkit-transform: scaleX(-1);" [width]="width" [height]="height"></canvas>
+

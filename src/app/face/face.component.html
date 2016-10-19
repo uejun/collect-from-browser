@@ -1,0 +1,25 @@
+<div align="center" >
+<md-card align="left" style="width: 50%;">
+    <md-card-title>Please let me know your attributes.</md-card-title>
+    <md-card-actions>
+        <form [formGroup]="faceAttrForm" (ngSubmit)="onSubmit()">
+            <label>Gender: </label>
+            <md-radio-group formControlName="gender">
+                <md-radio-button *ngFor="let g of genders" [value]="g">{{g}}</md-radio-button>
+            </md-radio-group>
+            <hr>
+            <label>Glasses: </label>
+            <md-radio-group formControlName="glasses">
+                <md-radio-button *ngFor="let g of glasses" [value]="g">{{g}}</md-radio-button>
+            </md-radio-group>
+            <hr>
+            <label>Eyebrows: </label>
+            <md-radio-group formControlName="eyebrows">
+                <md-radio-button *ngFor="let e of eyebrows" [value]="e">{{e}}</md-radio-button>
+            </md-radio-group>
+            <hr>
+            <button type="submit" md-raised-button color="primary" style="margin: auto" >start</button>
+        </form>
+    </md-card-actions>
+</md-card>
+</div>

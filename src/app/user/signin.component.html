@@ -1,0 +1,28 @@
+<div align="center">
+<md-card style="width: 50%">
+  <md-toolbar>Sign In</md-toolbar>
+  <md-card-content>
+    <form [formGroup]="sineupForm" (ngSubmit)="onSubmit()">
+      <md-input type="email"
+                placeholder="Email"
+                formControlName="email"
+                #email
+                style="width: 100%"
+      ></md-input>
+      <span *ngIf="!email.pristine && email.errors != null && email.errors['noEmail']" style="text-align: left">
+        Invalid Email
+      </span>
+      <br>
+      <md-input type="password"
+                placeholder="Password"
+                formControlName="password"
+                style="width: 100%"
+      ></md-input>
+      <span *ngIf="!email.pristine && !sineupForm.valid">Emailまたはパスワードが不正です.</span>
+      <br>
+      <button type="submit" md-raised-button color="primary" [disabled]="!sineupForm.valid">Sign In</button>
+    </form>
+  </md-card-content>
+  <md-progress-bar *ngIf="signining" mode="indeterminate" color="primary"></md-progress-bar>
+</md-card>
+</div>
