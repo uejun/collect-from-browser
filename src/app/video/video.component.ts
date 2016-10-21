@@ -37,23 +37,59 @@ export class VideoComponent implements OnInit {
      this.router.navigate(['/signin']);
     }
 
-    navigator.mediaDevices.getUserMedia = navigator.mediaDevices.getUserMedia;
-    window.URL = window.URL;
+    // // Older browsers might not implement mediaDevices at all, so we set an empty object first
+    // if (navigator.mediaDevices === undefined) {
+    //   navigator.mediaDevices = {};
+    // }
+    //
+    // // Some browsers partially implement mediaDevices. We can't just assign an object
+    // // with getUserMedia as it would overwrite existing properties.
+    // // Here, we will just add the getUserMedia property if it's missing.
+    // if (navigator.mediaDevices.getUserMedia === undefined) {
+    //   navigator.mediaDevices.getUserMedia = function(constraints) {
+    //
+    //     // First get ahold of the legacy getUserMedia, if present
+    //     var getUserMedia = (navigator.getUserMedia ||
+    //     navigator.webkitGetUserMedia ||
+    //     navigator.mozGetUserMedia);
+    //
+    //     // Some browsers just don't implement it - return a rejected promise with an error
+    //     // to keep a consistent interface
+    //     if (!getUserMedia) {
+    //       return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+    //     }
+    //
+    //     // Otherwise, wrap the call to the old navigator.getUserMedia with a Promise
+    //     return new Promise(function(resolve, reject) {
+    //       getUserMedia.call(navigator, constraints, resolve, reject);
+    //     });
+    //   }
+    // }
+
+    // navigator.mediaDevices.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+   // window.URL = window.URL || window.webkitURL;
 
     this.video = document.getElementById('myvideo');
     this.canvas = document.getElementById('canvas');
     this.photo = document.getElementById('photo');
     this.showvideo = document.getElementById('showvideo');
 
-    navigator.getUserMedia({video: true, audio: false},
-      stream => {
-        this.video.src = window.URL.createObjectURL(stream);
-        this.showvideo.src = window.URL.createObjectURL(stream);
-      },
-      err => { // for error case
-        console.log(err);
-      }
-    );
+    navigator.mediaDevices.getUserMedia({video: true, audio: false})
+      .then(
+        stream => {
+          // this.video.src = window.URL.createObjectURL(stream);
+          // this.showvideo.src = window.URL.createObjectURL(stream);
+          this.video.srcObject = stream;
+          this.showvideo.srcObject = stream;
+          this.video.onloadedmetadata = function (e) {
+            this.video.play();
+          };
+          this.showvideo.onloadedmetadata = function (e) {
+            this.showvideo.play();
+          };
+        },
+        err => console.log(err.name + ": " + err.message)
+        );
   }
 
   canPlay() {
