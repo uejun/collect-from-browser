@@ -7,7 +7,7 @@
     </md-grid-tile>
     <md-grid-tile>
         <md-card>
-            <md-card-title> {{currentTotal}} faces uploaded now.</md-card-title>
+            <md-card-title> RestCount: {{restCount}} faces.</md-card-title>
            <md-card-content>
                <video hidden #myvideo id="myvideo" [class.flapPhoto]="true" autoplay (canplay)="canPlay()" [width]="width" [height]="height">Video stream notavailable.</video>
                <video #showvideo id="showvideo" [class.flapPhoto]="true" autoplay (canplay)="canPlay()" width="100%" height="width*0.75">Video stream notavailable.</video>

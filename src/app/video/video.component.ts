@@ -28,7 +28,7 @@ export class VideoComponent implements OnInit {
   private data;
   public uploading = false;
   private user: User;
-  public currentTotal = 0;
+  public restCount = 160;
   @ViewChild('stimuluscomp') stimuluscomp: StimulusComponent;
 
   constructor(private faceUploadService: FaceUploadService, private router: Router) {
@@ -41,7 +41,6 @@ export class VideoComponent implements OnInit {
     }
 
     this.user = this.faceUploadService.getUser();
-    this.currentTotal = this.user.count;
 
     // // Older browsers might not implement mediaDevices at all, so we set an empty object first
     // if (navigator.mediaDevices === undefined) {
@@ -97,6 +96,7 @@ export class VideoComponent implements OnInit {
         err => console.log(err.name + ": " + err.message)
         );
 
+    this.restCount = this.stimuluscomp.restCount;
 
   }
 
@@ -158,13 +158,14 @@ export class VideoComponent implements OnInit {
     this.uploading = true;
     setTimeout(()=>this.uploading=false, 1000);
     this.faceUploadService.uploadFace(this.data.replace(/^.*,/, ''));
-    this.currentTotal += 1;
+
     this.clearphoto();
     if (this.stimuluscomp.hasNext()) {
       this.stimuluscomp.next();
     } else {
       this.router.navigate(['/finished'])
     }
+    this.restCount = this.stimuluscomp.restCount;
   }
 
 

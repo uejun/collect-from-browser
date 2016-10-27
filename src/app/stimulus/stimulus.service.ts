@@ -13,8 +13,8 @@ export class StimulusService implements OnInit {
   ngOnInit(): void {
   }
 
-  retrieveStimuli(): Observable<any> {
-    return this.http.get(this.endpoint)
+  retrieveStimuli(user_id: number): Observable<any> {
+    return this.http.get(this.endpoint + "/" + user_id)
       .map((r:Response) => r.json())
   }
 

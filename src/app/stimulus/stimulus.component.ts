@@ -18,20 +18,21 @@ export class StimulusComponent implements OnInit {
   private instruction: string;
   errorMessage: any;
   private user: User;
+  public restCount = 160;
 
   constructor(private stimulusService: StimulusService, private faceUploadService: FaceUploadService) { }
 
   ngOnInit() {
     this.user = this.faceUploadService.getUser();
-    this.retrieveStimuli();
+    this.retrieveStimuli(this.user.user_id);
   }
 
-  retrieveStimuli() {
-    this.stimulusService.retrieveStimuli()
+  retrieveStimuli(user_id: number) {
+    this.stimulusService.retrieveStimuli(user_id)
       .subscribe(
         stimuli => {
-          this.index = this.user.count;
           this.stimuli=stimuli;
+          this.restCount = this.stimuli.length;
           this.currentStimulus = this.stimuli[this.index];
           this.setInstruction();
           this.faceUploadService.setStimulus(this.currentStimulus);
@@ -74,17 +75,11 @@ export class StimulusComponent implements OnInit {
     this.currentStimulus = this.stimuli[this.index];
     this.setInstruction();
     this.faceUploadService.setStimulus(this.currentStimulus);
+    this.restCount -= 1;
   }
 
   hasNext() {
     return this.index + 1 < this.stimuli.length
-  }
-
-  setIndex(i: number) {
-    this.index = i;
-    this.currentStimulus = this.stimuli[this.index];
-    this.setInstruction();
-    this.faceUploadService.setStimulus(this.currentStimulus);
   }
 
 
