@@ -65,4 +65,8 @@ export class FaceUploadService {
     xmlHttpRequest.send( json );
   }
 
+  getUser() {
+    return this.user;
+  }
+
 }

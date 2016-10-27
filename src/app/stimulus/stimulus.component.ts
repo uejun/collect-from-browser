@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {StimulusService} from "./stimulus.service";
 import {Stimulus} from "./stimulus";
 import {FaceUploadService} from "../face/face-upload.service";
+import {User} from "../user/user";
 
 @Component({
   selector: 'app-stimulus',
@@ -16,10 +17,12 @@ export class StimulusComponent implements OnInit {
   private index = 0;
   private instruction: string;
   errorMessage: any;
+  private user: User;
 
   constructor(private stimulusService: StimulusService, private faceUploadService: FaceUploadService) { }
 
   ngOnInit() {
+    this.user = this.faceUploadService.getUser();
     this.retrieveStimuli();
   }
 
@@ -27,7 +30,7 @@ export class StimulusComponent implements OnInit {
     this.stimulusService.retrieveStimuli()
       .subscribe(
         stimuli => {
-          console.log(stimuli);
+          this.index = this.user.count + 1;
           this.stimuli=stimuli;
           this.currentStimulus = this.stimuli[this.index];
           this.setInstruction();
@@ -76,5 +79,13 @@ export class StimulusComponent implements OnInit {
   hasNext() {
     return this.index + 1 < this.stimuli.length
   }
+
+  setIndex(i: number) {
+    this.index = i;
+    this.currentStimulus = this.stimuli[this.index];
+    this.setInstruction();
+    this.faceUploadService.setStimulus(this.currentStimulus);
+  }
+
 
 }

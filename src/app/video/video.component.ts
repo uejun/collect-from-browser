@@ -3,6 +3,7 @@ import {ViewChild} from "@angular/core/src/metadata/di";
 import {FaceUploadService} from "../face/face-upload.service";
 import {StimulusComponent} from "../stimulus/stimulus.component";
 import {Router} from "@angular/router";
+import {User} from "../user/user";
 
 @Component({
   selector: 'app-video',
@@ -26,6 +27,8 @@ export class VideoComponent implements OnInit {
   private pristine = true;
   private data;
   public uploading = false;
+  private user: User;
+  public currentTotal = 0;
   @ViewChild('stimuluscomp') stimuluscomp: StimulusComponent;
 
   constructor(private faceUploadService: FaceUploadService, private router: Router) {
@@ -36,6 +39,9 @@ export class VideoComponent implements OnInit {
     if (!this.faceUploadService.isReady()) {
      this.router.navigate(['/signin']);
     }
+
+    this.user = this.faceUploadService.getUser();
+    this.currentTotal = this.user.count;
 
     // // Older browsers might not implement mediaDevices at all, so we set an empty object first
     // if (navigator.mediaDevices === undefined) {
@@ -90,6 +96,8 @@ export class VideoComponent implements OnInit {
         },
         err => console.log(err.name + ": " + err.message)
         );
+
+
   }
 
   canPlay() {
@@ -150,6 +158,7 @@ export class VideoComponent implements OnInit {
     this.uploading = true;
     setTimeout(()=>this.uploading=false, 1000);
     this.faceUploadService.uploadFace(this.data.replace(/^.*,/, ''));
+    this.currentTotal += 1;
     this.clearphoto();
     if (this.stimuluscomp.hasNext()) {
       this.stimuluscomp.next();

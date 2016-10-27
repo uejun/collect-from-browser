@@ -51,7 +51,6 @@ export class SigninComponent implements OnInit {
           this.userService.retrieveUser(user.uid)
             .then(
               dbUser => {
-                console.log("signin ユーザー", dbUser);
                 this.faceUploadService.setUser(dbUser);
                 this.signining = false;
                 this.router.navigate(['/faceattr']);

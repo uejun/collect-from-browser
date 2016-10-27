@@ -25,7 +25,7 @@ export class UserService {
   retrieveUser(uid: string): Promise<User> {
    return this.http.get(this.USERS_ENDPOINT_URL+"/"+uid)
      .map((r:Response)=>{
-       return {user_id: r.json()['user_id'], uid: r.json()['uid'], email: r.json()['email'], name: r.json()['name']};
+       return {user_id: r.json()['user_id'], uid: r.json()['uid'], email: r.json()['email'], name: r.json()['name'], count: r.json()['count']};
      })
      .toPromise()
   }
