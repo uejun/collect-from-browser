@@ -30,7 +30,7 @@ export class StimulusComponent implements OnInit {
     this.stimulusService.retrieveStimuli()
       .subscribe(
         stimuli => {
-          this.index = this.user.count + 1;
+          this.index = this.user.count;
           this.stimuli=stimuli;
           this.currentStimulus = this.stimuli[this.index];
           this.setInstruction();
