@@ -62,6 +62,7 @@ export class SignupComponent implements OnInit {
         user => {
           this.userService.register(user.uid, user.email, username)
               .then( u => {
+                  u.count = 0;
                   this.faceUploadService.setUser(u);
                   this.registering = false;
                   this.router.navigate(['/faceattr']);
